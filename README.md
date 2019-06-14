@@ -1,8 +1,8 @@
-#Como Rodar:
+# Como Rodar:
 
 Baixe o repositorio e abra o arquivo BezierCurve.html no navegador
 
-#Criar a curva:
+# Criar a curva:
 
 Para adicionar um ponto basta dar dois cliques na tela
 
@@ -10,7 +10,7 @@ Para deletar um ponto basta dar dois cliques nele
 
 Para modificar um ponto bastar clicar e arrasta-lo pela tela
 
-#Funcionalidades:
+# Funcionalidades:
 
 Numero de Avaliações define qual será o numero de avaliações que será usado pela curva 
 
