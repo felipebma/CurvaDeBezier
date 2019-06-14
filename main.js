@@ -131,6 +131,21 @@ canvas.addEventListener("mousedown", (e) => {
     isHover = true;
 });
 
+document.getElementById("next").onclick = function(){
+    currentCurve = currentCurve+1;
+    if(curves[currentCurve]==null){
+        curves[currentCurve] = []; 
+    }
+    drawWord();
+ };
+
+ document.getElementById("prev").onclick = function(){
+    if(currentCurve != 0){
+        currentCurve = currentCurve-1;
+        drawWord();
+    }
+ };
+
 function resizeCanvas(width, height) {
     canvas.width = width;
     canvas.height = height;
