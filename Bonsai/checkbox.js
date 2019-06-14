@@ -18,18 +18,27 @@ bonsai.run(document.getElementById('tela'), {
                 y = this.attr('y');     
             }) 
             points.push(point);
-            stage.addChild(points[cont++]); 
+            stage.addChild(points[cont]); 
             console.log(cont);
-            point.on('multi:drag', function(e){
+            /*points[cont].on('multi:drag', function(e){
                 this.attr({
                     x: x + e.diffX,
                     y: y + e.diffY
                 });
             }).on('pointerup', function(){
+                stage.removeChild(points[cont]);
+                points.splice(cont,1);
                 stage.removeChild(points[--cont]);
                 points.splice(cont,1);
             })  
+            */
+            cont++;
         })
+
+
+        bezierCreator = function(){
+            indexes = binomials(points.count());
+        }
 
     }    
   }
