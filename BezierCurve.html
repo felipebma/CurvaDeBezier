@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href=".\main.css">
+    </head>
+    <body>
+        <h1>
+            Curvas De Bezier
+        </h1>
+        <div id="controls">
+            Número de Avaliações: <input type="number" class="write" id="evaluations" value=10>
+            Pontos de Controle <input type="checkbox" id="controlPoints" checked>
+            Poligonal de Controle <input type="checkbox" id="controlPoligonal" checked>
+            Curva de Bézier <input type="checkbox" id="BezierCurve" checked>
+        </div>
+        <div id="container" class= "flex-container">
+            <canvas id = "canvas" >
+                <script type="text/javascript" src=".\main.js"></script>
+            </canvas>
+        </div>
+
+    </body>
+</html>
