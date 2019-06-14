@@ -4,7 +4,7 @@ bonsai.run(document.getElementById('tela'), {
     width: 1000,
     height: 500,
     code: function() {
-        
+        var points = [];
         var myShape = new Rect(0, 0, 1000,500);
             myShape.fill('grey');
             myShape.addTo(stage);
@@ -15,21 +15,20 @@ bonsai.run(document.getElementById('tela'), {
             point.fill('red')
             .on('pointerdown', function(e) {
                 x = this.attr('x');
-                y = this.attr('y');
-                stage.addChild(point);
-            })
-            .on('multi:drag', function(e){
+                y = this.attr('y');     
+            }) 
+            points.push(point);
+            stage.addChild(points[cont++]); 
+            console.log(cont);
+            point.on('multi:drag', function(e){
                 this.attr({
                     x: x + e.diffX,
                     y: y + e.diffY
                 });
-            })
-            .on('pointerdown', function(){
-                stage.removeChild(point);
-                cont--;
-            })
-            stage.addChild(point);
-            console.log(++cont);
+            }).on('pointerup', function(){
+                stage.removeChild(points[--cont]);
+                points.splice(cont,1);
+            })  
         })
 
     }    
