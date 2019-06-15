@@ -15,6 +15,7 @@ canvas.height = window.innerHeight;
 
 var currentCurve = 0;
 var move = false;
+var movingPoint;
 var globalRadius = 10;
 var isHover = false;
 
@@ -114,17 +115,13 @@ canvas.addEventListener("mouseup", (e) => {
 
 canvas.addEventListener("mousemove", (e) => {
     if(isHover){
-        index = isAnyPoint({
-            x: e.offsetX,
-            y: e.offsetY
-        })
-        updatePoint(index, e);
+        updatePoint(movingPoint, e);
         drawWord(); 
     }
 });
 
 canvas.addEventListener("mousedown", (e) => {
-    move = isAnyPoint({
+    movingPoint = isAnyPoint({
         x: e.offsetX,
         y: e.offsetY
     }) 
