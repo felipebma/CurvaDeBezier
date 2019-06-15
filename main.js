@@ -111,10 +111,11 @@ function deletePoint(index){
         indexes[currentCurve] = [];
     }else{
         size = indexes[currentCurve].length
-        for(var i=1;i<(size+1)/2;i++){
+        for(var i=1;i<(size)/2;i++){
             indexes[currentCurve][i]=indexes[currentCurve][i]-indexes[currentCurve][i-1];
-            indexes[currentCurve][size-i]=indexes[currentCurve][i];
+            indexes[currentCurve][size-i-2]=indexes[currentCurve][i];
         }
+        indexes[currentCurve][size-2]=1;
         indexes[currentCurve].splice(size-1,1);
     }
     console.log("indexesDelete:")
