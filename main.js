@@ -15,9 +15,9 @@ canvas.height = window.innerHeight;
 
 var currentCurve = 0;
 var move = false;
-var movingPoint;
 var globalRadius = 10;
 var isHover = false;
+var lastCurve = 0;
 
 class Point {
     constructor(x,y){
@@ -36,13 +36,13 @@ function drawWord(){
         }
     }
     if(controlPoligon.checked){
-        drawLinesFromPoints(curves[currentCurve]);
+        drawLinesFromPoints(curves[currentCurve], "pink");
     }
 }
 
-function drawLinesFromPoints(points){
+function drawLinesFromPoints(points, color){
     for (var i=1;i<points.length;i++){
-        drawLine(points[i-1], points[i]);
+        drawLine(points[i-1], points[i], color);
     }
 }
 
@@ -53,11 +53,11 @@ function drawPoint(pt){
     ctx.fill();
 }
 
-function drawLine(pt1, pt2){
+function drawLine(pt1, pt2, color){
     ctx.beginPath();
     ctx.moveTo(pt1.x, pt1.y);
     ctx.lineTo(pt2.x, pt2.y);
-    ctx.strokeStyle = "pink";
+    ctx.strokeStyle = color;
     ctx.lineWidth = 1;
     ctx.stroke();
 }
@@ -135,19 +135,45 @@ canvas.addEventListener("mousedown", (e) => {
 });
 
 document.getElementById("next").onclick = function(){
-    currentCurve = currentCurve+1;
-    if(curves[currentCurve]==null){
-        curves[currentCurve] = []; 
-    }
-    drawWord();
- };
-
- document.getElementById("prev").onclick = function(){
-    if(currentCurve != 0){
-        currentCurve = currentCurve-1;
+    if(lastCurve!=currentCurve){
+        currentCurve = currentCurve+1;
         drawWord();
     }
  };
+
+ 
+ document.getElementById("prev").onclick = function(){
+     if(currentCurve != 0){
+         currentCurve = currentCurve-1;
+         drawWord();
+        }
+    };
+    
+document.getElementById("create").onclick = function(){
+    lastCurve = lastCurve+1;
+    curves[lastCurve] = [];
+};
+
+document.getElementById("clear").onclick = function(){
+    curves[currentCurve] = [];
+    drawWord();
+ };
+
+controlPoints.addEventListener(("change"), (e) => {
+    drawWord();
+});
+
+controlPoligon.addEventListener(("change"), (e) => {
+    drawWord();
+});
+
+controlCurve.addEventListener(("change"), (e) => {
+    drawWord();
+});
+
+surfaceOp.addEventListener(("change"), (e) => {
+    drawWord();
+});
 
 function resizeCanvas(width, height) {
     canvas.width = width;
