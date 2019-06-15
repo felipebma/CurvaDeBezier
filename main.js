@@ -5,9 +5,9 @@ var controlPoligon = document.getElementById('controlPoligonal');
 var controlCurve = document.getElementById('BezierCurve');
 
 var ctx = canvas.getContext('2d');
-var curves = [];
+var curves = [], indexes = [];
 var grau = 2;
-curves[0] = [];
+curves[0] = [], indexes[0] = [];
 var boundX = canvas.getBoundingClientRect().left;
 var boundY = canvas.getBoundingClientRect().top;
 canvas.width = window.innerWidth;
@@ -89,6 +89,12 @@ function updatePoint(index, e){
 
 function addPoint(pt){
     curves[currentCurve].push(pt);
+    indexes[currentCurve][0]=1;
+    for(var i=indexes[currentCurve].length-1;i>0;i--){
+        indexes[currentCurve][i]=(indexes[currentCurve][i]+indexes[currentCurve][i-1]);
+    }    
+    indexes[currentCurve].push(1);
+    console.log(indexes[currentCurve]);
 }
 function deletePoint(index){
     curves[currentCurve].splice(index, 1);
@@ -153,3 +159,6 @@ function resizeToFit() {
     resizeCanvas(width, height);
 }
 resizeToFit();
+
+
+
