@@ -37,6 +37,10 @@ function drawWord(){
     }
     if(controlPoligon.checked){
         drawLinesFromPoints(curves[currentCurve], "pink");
+        if(curves[currentCurve].length>1){
+            drawLinesFromPoints(bezierCurve(),"blue");
+        }
+        
     }
 }
 
@@ -171,7 +175,7 @@ controlCurve.addEventListener(("change"), (e) => {
     drawWord();
 });
 
-surfaceOp.addEventListener(("change"), (e) => {
+eval.addEventListener(("change"), (e) => {
     drawWord();
 });
 
@@ -185,6 +189,33 @@ function resizeToFit() {
     resizeCanvas(width, height);
 }
 resizeToFit();
+
+
+bezierCurve = function(){
+    var points = curves[currentCurve], index = indexes[currentCurve], t=eval.value;
+    curvePoints=[];
+    var indexesX = [], indexesY = [];
+    for(var i=0;i<points.length;i++){
+        indexesX[i]=(index[i]*points[i].x);
+        indexesY[i]=(index[i]*points[i].y);
+        console.log("i:"+i)
+    }
+    console.log("t:"+t)
+    for(var i=0;i<t;i++){
+        var coefA=points.length-1,coefB=0,x=0,y=0,dist=1/t;
+        for(var j=0;j<points.length;j++){
+            console.log("j:"+j)
+            x+=indexesX[j]*Math.pow(i*dist,coefB)*(Math.pow((1-(i*dist)),coefA))            
+            y+=indexesY[j]*Math.pow(i*dist,coefB)*(Math.pow((1-(i*dist)),coefA))
+            coefA=coefA-1;
+            coefB++;
+            console.log("A:"+coefA+" B:"+coefB)
+        }  
+        curvePoints.push({'x':x,'y':y})  
+        console.log(curvePoints);
+    }
+    return curvePoints; 
+}
 
 
 
