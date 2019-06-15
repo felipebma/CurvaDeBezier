@@ -93,13 +93,17 @@ function updatePoint(index, e){
 
 function addPoint(pt){
     curves[currentCurve].push(pt);
-    indexes[currentCurve][0]=1;
-    for(var i=indexes[currentCurve].length-1;i>0;i--){
-        indexes[currentCurve][i]=(indexes[currentCurve][i]+indexes[currentCurve][i-1]);
-    }    
-    indexes[currentCurve].push(1);
-    console.log(indexes[currentCurve]);
+    if(curves[currentCurve].length>1){
+        indexes[currentCurve][0]=1;
+        for(var i=indexes[currentCurve].length-1;i>0;i--){
+            indexes[currentCurve][i]=(indexes[currentCurve][i]+indexes[currentCurve][i-1]);
+        }    
+        indexes[currentCurve].push(1);
+        console.log(indexes[currentCurve]);
+    }
+    
 }
+
 function deletePoint(index){
     curves[currentCurve].splice(index, 1);
 }
@@ -214,6 +218,8 @@ bezierCurve = function(){
         curvePoints.push({'x':x,'y':y})  
         console.log(curvePoints);
     }
+    var last = points[points.length-1];
+    curvePoints.push(last)
     return curvePoints; 
 }
 
