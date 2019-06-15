@@ -37,10 +37,11 @@ function drawWord(){
     }
     if(controlPoligon.checked){
         drawLinesFromPoints(curves[currentCurve], "pink");
+    }
+    if(controlCurve.checked){
         if(curves[currentCurve].length>1){
             drawLinesFromPoints(bezierCurve(),"blue");
         }
-        
     }
 }
 
@@ -106,6 +107,18 @@ function addPoint(pt){
 
 function deletePoint(index){
     curves[currentCurve].splice(index, 1);
+    if(curves[currentCurve].length<2){
+        indexes[currentCurve] = [];
+    }else{
+        size = indexes[currentCurve].length
+        for(var i=1;i<(size+1)/2;i++){
+            indexes[currentCurve][i]=indexes[currentCurve][i]-indexes[currentCurve][i-1];
+            indexes[currentCurve][size-i]=indexes[currentCurve][i];
+        }
+        indexes[currentCurve].splice(size-1,1);
+    }
+    console.log("indexesDelete:")
+    console.log(indexes[currentCurve]);
 }
 
 canvas.addEventListener("dblclick", (e) => {
@@ -159,11 +172,15 @@ document.getElementById("next").onclick = function(){
     
 document.getElementById("create").onclick = function(){
     lastCurve = lastCurve+1;
+    currentCurve = lastCurve;
     curves[lastCurve] = [];
+    indexes[lastCurve] = [];
+    drawWord();
 };
 
 document.getElementById("clear").onclick = function(){
     curves[currentCurve] = [];
+    indexes[currentCurve] = [];
     drawWord();
  };
 
@@ -208,15 +225,15 @@ bezierCurve = function(){
     for(var i=0;i<t;i++){
         var coefA=points.length-1,coefB=0,x=0,y=0,dist=1/t;
         for(var j=0;j<points.length;j++){
-            console.log("j:"+j)
+            //console.log("j:"+j)
             x+=indexesX[j]*Math.pow(i*dist,coefB)*(Math.pow((1-(i*dist)),coefA))            
             y+=indexesY[j]*Math.pow(i*dist,coefB)*(Math.pow((1-(i*dist)),coefA))
             coefA=coefA-1;
             coefB++;
-            console.log("A:"+coefA+" B:"+coefB)
+            //console.log("A:"+coefA+" B:"+coefB)
         }  
         curvePoints.push({'x':x,'y':y})  
-        console.log(curvePoints);
+        //console.log(curvePoints);
     }
     var last = points[points.length-1];
     curvePoints.push(last)
