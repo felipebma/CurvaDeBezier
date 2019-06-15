@@ -68,7 +68,6 @@ function drawLine(pt1, pt2, color){
 }
 
 function isAnyPoint(click){
-    console.log(click)
     for (let i = 0; i < curves[currentCurve].length; i++) {
         var element = curves[currentCurve][i];
         if (isInCircle(element, click)){
@@ -100,7 +99,6 @@ function addPoint(pt){
             indexes[currentCurve][i]=(indexes[currentCurve][i]+indexes[currentCurve][i-1]);
         }    
         indexes[currentCurve].push(1);
-        console.log(indexes[currentCurve]);
     }
     
 }
@@ -111,15 +109,13 @@ function deletePoint(index){
         indexes[currentCurve] = [];
     }else{
         size = indexes[currentCurve].length
-        for(var i=1;i<(size)/2;i++){
+        for(var i=1;i<(size-1)/2;i++){
             indexes[currentCurve][i]=indexes[currentCurve][i]-indexes[currentCurve][i-1];
             indexes[currentCurve][size-i-2]=indexes[currentCurve][i];
         }
         indexes[currentCurve][size-2]=1;
         indexes[currentCurve].splice(size-1,1);
     }
-    console.log("indexesDelete:")
-    console.log(indexes[currentCurve]);
 }
 
 canvas.addEventListener("dblclick", (e) => {
@@ -220,21 +216,16 @@ bezierCurve = function(){
     for(var i=0;i<points.length;i++){
         indexesX[i]=(index[i]*points[i].x);
         indexesY[i]=(index[i]*points[i].y);
-        console.log("i:"+i)
     }
-    console.log("t:"+t)
     for(var i=0;i<t;i++){
         var coefA=points.length-1,coefB=0,x=0,y=0,dist=1/t;
         for(var j=0;j<points.length;j++){
-            //console.log("j:"+j)
             x+=indexesX[j]*Math.pow(i*dist,coefB)*(Math.pow((1-(i*dist)),coefA))            
             y+=indexesY[j]*Math.pow(i*dist,coefB)*(Math.pow((1-(i*dist)),coefA))
             coefA=coefA-1;
             coefB++;
-            //console.log("A:"+coefA+" B:"+coefB)
         }  
         curvePoints.push({'x':x,'y':y})  
-        //console.log(curvePoints);
     }
     var last = points[points.length-1];
     curvePoints.push(last)
